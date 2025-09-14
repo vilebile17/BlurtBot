@@ -3,6 +3,7 @@ from dotenv import load_dotenv
 from discord.ext import commands
 
 from gemini import predict_message
+from message_counter import message_counter
 
 
 def main():
@@ -53,6 +54,12 @@ def main():
                 await message.channel.send(prediction)
             else:
                 print("Either message history is empty or the permission to view history is off")
+
+        elif message.content.lower() == "!message-counter":
+            history = message.channel.history(limit=10000)
+            dic = await message_counter(history)
+            for sender in dic:
+                await message.channel.send(f"{sender}: {dic[sender]}")
 
 
     client.run(discord_key)
