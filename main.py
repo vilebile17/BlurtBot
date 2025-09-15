@@ -3,7 +3,7 @@ from dotenv import load_dotenv
 from discord.ext import commands
 
 from gemini import predict_message
-from message_counter import message_counter
+from message_counter import message_counter, format_results
 
 
 def main():
@@ -58,8 +58,8 @@ def main():
         elif message.content.lower() == "!message-counter":
             history = message.channel.history(limit=10000)
             dic = await message_counter(history)
-            for sender in dic:
-                await message.channel.send(f"{sender}: {dic[sender]}")
+            results = format_results(dic)
+            await message.channel.send(results)
 
 
     client.run(discord_key)
