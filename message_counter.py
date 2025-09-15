@@ -19,11 +19,12 @@ def dic_sum(dic):
     return total
 
 
-def format_results(dic):
+def format_results(dic, header):
     # formats the results from message_counter() nicely
     sorted_dic = dict(sorted(dic.items(), key=lambda item: item[1], reverse=True))
-    string = "# Message count"
+    string = header
     counter, total_message_count = 0, dic_sum(sorted_dic)
+    string += f"\n **Total** = {total_message_count}\n"
 
     for sender in sorted_dic:
         counter += 1

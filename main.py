@@ -4,6 +4,7 @@ from discord.ext import commands
 
 from gemini import predict_message
 from message_counter import message_counter, format_results
+from bookbot import bookbot
 
 
 def main():
@@ -58,7 +59,13 @@ def main():
         elif message.content.lower() == "!message-counter":
             history = message.channel.history(limit=10000)
             dic = await message_counter(history)
-            results = format_results(dic)
+            results = format_results(dic, "# Message Count")
+            await message.channel.send(results)
+
+        elif message.content.lower() == "!bookbot":
+            history = message.channel.history(limit=10000)
+            dic = await bookbot(history)
+            results = format_results(dic, "# Character Composition")
             await message.channel.send(results)
 
 
