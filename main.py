@@ -29,11 +29,7 @@ def main():
 
     @client.event
     async def on_disconnect():
-        channel = client.get_channel(default_channel_ID)
-        if channel is not None:
-            await channel.send("BlurtBot out 🫡")
-        else:
-            print("Channel not found :(")
+        print("BlurtBot out 🫡")
 
     @client.event
     async def on_message(message):
@@ -43,7 +39,7 @@ def main():
             await message.channel.send(f"Hello there, {message.author}")
         
         elif message.content.lower() == "!predict":
-            history = message.channel.history(limit=50)
+            history = message.channel.history(limit=20)
             msg_lst = []
             async for msg in history:
                 if not msg.content.startswith("!") and msg.author != client.user:
@@ -56,13 +52,13 @@ def main():
             else:
                 print("Either message history is empty or the permission to view history is off")
 
-        elif message.content.lower() == "!message-counter":
+        elif message.content.lower() == "!message-counter" or message.content.lower() == "!message_counter":
             history = message.channel.history(limit=10000)
             dic = await message_counter(history)
             results = format_results(dic, "# Message Count")
             await message.channel.send(results)
 
-        elif message.content.lower() == "!bookbot":
+        elif message.content.lower() == "!bookbot" or message.content.lower() == "!book-bot":
             history = message.channel.history(limit=10000)
             dic = await bookbot(history)
             results = format_results(dic, "# Character Composition")
