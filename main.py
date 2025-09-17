@@ -18,11 +18,7 @@ def main():
     default_channel_ID = int(os.environ.get("DEFAULT_CHANNEL"))
     bot = commands.Bot(command_prefix='!', intents=intents)
 
-    blurt_emoji = bot.get_emoji(1417547920722366686)
-    if blurt_emoji == None:
-        print(f"Emoji of id: 1417547920722366686 was not found")
 
- 
     @bot.event
     async def on_ready():
         channel = bot.get_channel(default_channel_ID)
@@ -73,13 +69,6 @@ def main():
         dic = await bookbot(ctx)
         results = format_results(dic, "# Character Composition")
         await ctx.send(results)
-
-
-
-
-
-
-    
 
     bot.run(discord_key)
     
