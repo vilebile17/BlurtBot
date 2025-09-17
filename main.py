@@ -2,7 +2,7 @@ import os, sys, discord
 from dotenv import load_dotenv
 from discord.ext import commands
 
-from gemini import predict_message
+from gemini import predict_message, mention
 from message_counter import message_counter, format_results
 from bookbot import bookbot
 
@@ -42,8 +42,8 @@ def main():
 
         await bot.process_commands(message)
 
-        if "hi" in message.content.lower() and "blurt" in message.content.lower():
-            await message.channel.send(f"Hello there, {message.author.mention}")
+        if bot.user.mention in message.content:
+            await message.channel.send(mention(message.content))
         
     @bot.command(name="predict")
     async def predict(ctx):

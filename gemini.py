@@ -27,3 +27,21 @@ def predict_message(previous_messages):
     )
 
     return response.text
+
+
+def mention(message):
+    load_dotenv()
+    gemini_key = os.environ.get("GEMINI_API_KEY")
+    client = genai.Client(api_key=gemini_key)
+
+    instructions ="You are a discord bot named 'BlurtBot' who just got mentioned, you need to give a response, ideally relatively short, which responds to the message"
+    
+    response = client.models.generate_content(
+        contents=message,
+        model='gemini-2.0-flash-001',
+        config=types.GenerateContentConfig(
+            system_instruction=instructions
+        )
+    )
+
+    return response.text

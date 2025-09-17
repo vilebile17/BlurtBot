@@ -8,7 +8,7 @@ async def bookbot(ctx):
 
     dic = {}
     for char in string:
-        if char and char != " ":
+        if char and char != " " and "\n" not in char:
             if char in dic:
                 dic[char] += 1
             else:
