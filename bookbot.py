@@ -1,9 +1,9 @@
 import discord
 
-async def bookbot(history):
+async def bookbot(ctx):
     # returns a dic
     string = ""
-    async for message in history:
+    async for message in ctx.history(limit=10000):
         string += message.content.strip()
 
     dic = {}
