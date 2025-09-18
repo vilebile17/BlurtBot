@@ -48,8 +48,8 @@ def main():
         else:
             print(error)
 
-        
-    @bot.command(name="predict")
+
+    @bot.command(name="predict", help="Predicts a message using Google Gemini based on the last 20 messages")
     async def predict(ctx):
         msg_lst = []
 
@@ -66,19 +66,19 @@ def main():
         else:
             print("Either message history is empty or the permission to view history is off")
 
-    @bot.command(name="message-counter", aliases=["messagecounter", "count-messages"])
+    @bot.command(name="message-counter", aliases=["messagecounter", "count-messages"], help="Counts the number of messages sent in the channel by each user")
     async def _message_counter(ctx):
         dic = await message_counter(ctx)
         results = format_results(dic, "# Message Count")
         await ctx.send(results)
 
-    @bot.command(name="bookbot", aliases=["bb", "character-composition"])
+    @bot.command(name="bookbot", aliases=["bb", "character-composition"], help="Counts the number of times each character shows up in the channel")
     async def _bookbot(ctx):
         dic = await bookbot(ctx)
         results = format_results(dic, "# Character Composition")
         await ctx.send(results)
 
-    @bot.command(name="8ball", aliases=["decision", "eightball", "eight-ball"])
+    @bot.command(name="8ball", aliases=["decision", "eightball", "eight-ball"], help="Gives a magic-8-ball like response")
     async def _8ball(ctx):
         options = ["yes", "no", "perhaps"]
         enum = random.choice(options)
