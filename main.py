@@ -1,8 +1,8 @@
-import os, sys, discord
+import os, sys, random, discord
 from dotenv import load_dotenv
 from discord.ext import commands
 
-from gemini import predict_message, mention
+from gemini import predict_message, mention, magic_8_ball
 from message_counter import message_counter, format_results
 from bookbot import bookbot
 
@@ -40,6 +40,14 @@ def main():
 
         if bot.user.mention in message.content:
             await message.channel.send(mention(message.content))
+
+    @bot.event
+    async def on_command_error(ctx, error):
+        if isinstance(error, commands.CommandNotFound):
+            await ctx.send("Oops that command doesn't appear to exist. Please refer to the app description or ask the bot with @BlurtBot for the list of commands")
+        else:
+            print(error)
+
         
     @bot.command(name="predict")
     async def predict(ctx):
@@ -69,6 +77,12 @@ def main():
         dic = await bookbot(ctx)
         results = format_results(dic, "# Character Composition")
         await ctx.send(results)
+
+    @bot.command(name="8ball", aliases=["decision", "eightball", "eight-ball"])
+    async def _8ball(ctx):
+        options = ["yes", "no", "perhaps"]
+        enum = random.choice(options)
+        await ctx.send(magic_8_ball(enum))
 
     bot.run(discord_key)
     
