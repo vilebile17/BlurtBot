@@ -44,7 +44,7 @@ def main():
     @bot.event
     async def on_command_error(ctx, error):
         if isinstance(error, commands.CommandNotFound):
-            await ctx.send("Oops that command doesn't appear to exist. Please refer to the app description or ask the bot with @BlurtBot for the list of commands")
+            await ctx.send("Oops that command doesn't appear to exist. Please use !help for a list of commands")
         else:
             print(error)
 
