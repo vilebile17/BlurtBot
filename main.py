@@ -1,6 +1,7 @@
 import os, sys, random, discord
 from dotenv import load_dotenv
 from discord.ext import commands
+from discord import app_commands
 
 from gemini import predict_message, mention, magic_8_ball
 from message_counter import message_counter, format_results
@@ -21,6 +22,7 @@ def main():
 
     @bot.event
     async def on_ready():
+        await bot.tree.sync()
         channel = bot.get_channel(default_channel_ID)
         if channel is not None:
             await channel.send("BlurtBot is up and ready for use!")
@@ -49,24 +51,23 @@ def main():
             print(error)
 
 
-    @bot.command(name="predict", help="Predicts a message using Google Gemini based on the last 20 messages")
-    async def predict(ctx):
+    @bot.tree.command(name="predict", description="Predicts a message using Google Gemini based on the last 20 messages")
+    async def predict(interaction: discord.Interaction):
         msg_lst = []
 
-        async for msg in ctx.channel.history(limit=20):
-            if not msg.content.startswith("!") and msg.author != bot.user:
-                msg_lst.append(msg.content)
+        async for msg in interaction.channel.history(limit=20):
+            msg_lst.append(msg.content)
 
         print("just scanned through history")
         print(msg_lst)
 
         if msg_lst:
             prediction = predict_message(msg_lst)
-            await ctx.channel.send(prediction)
+            await interaction.response.send_message(prediction)
         else:
             print("Either message history is empty or the permission to view history is off")
 
-    @bot.command(name="message-counter", aliases=["messagecounter", "count-messages"], help="Counts the number of messages sent in the channel by each user")
+    @bot.command(name="message-counter", help="Counts the number of messages sent in the channel by each user")
     async def _message_counter(ctx):
         dic = await message_counter(ctx)
         results = format_results(dic, "# Message Count")
