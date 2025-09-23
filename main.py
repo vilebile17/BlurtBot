@@ -22,7 +22,8 @@ def main():
 
     @bot.event
     async def on_ready():
-        await bot.tree.sync()
+        bot.tree.clear_commands(guild=discord.Object(id=1415382708758122608))
+        await bot.tree.sync(guild=discord.Object(id=1415382708758122608))
         channel = bot.get_channel(default_channel_ID)
         if channel is not None:
             await channel.send("BlurtBot is up and ready for use!")
@@ -67,11 +68,11 @@ def main():
         else:
             print("Either message history is empty or the permission to view history is off")
 
-    @bot.command(name="message-counter", help="Counts the number of messages sent in the channel by each user")
-    async def _message_counter(ctx):
-        dic = await message_counter(ctx)
+    @bot.tree.command(name="message-counter", description="Counts the number of messages sent by each user in the last n messages")
+    async def _message_counter(interaction: discord.Interaction, n: int = 10000):
+        dic = await message_counter(interaction, n)
         results = format_results(dic, "# Message Count")
-        await ctx.send(results)
+        await interaction.response.send_message(results)
 
     @bot.command(name="bookbot", aliases=["bb", "character-composition"], help="Counts the number of times each character shows up in the channel")
     async def _bookbot(ctx):

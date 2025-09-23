@@ -1,9 +1,9 @@
 import discord
 
-async def message_counter(ctx):
+async def message_counter(interaction, n):
     # Takes a list of discord messages and returns a dictionary containing each sender mapped to the number of messages that they sent
     message_counts =  {}
-    async for message in ctx.history(limit=10000):
+    async for message in interaction.channel.history(limit=n):
         if message.author in message_counts:
             message_counts[message.author] += 1
         else:
