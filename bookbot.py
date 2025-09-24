@@ -1,17 +1,19 @@
 import discord
 
-async def bookbot(ctx):
-    # returns a dic
-    string = ""
-    async for message in ctx.history(limit=10000):
-        string += message.content.strip()
-
-    dic = {}
-    for char in string:
-        if char and char != " " and "\n" not in char:
-            if char in dic:
-                dic[char] += 1
+async def bookbot(interaction, n):
+    characters = {}
+    messages = [word async for word in interaction.channel.history(limit=n)]
+    for message in messages:
+        content = message.content.lower()
+        for i in range(len(content)):
+            if content[i] in characters:
+                characters[content[i]] += 1
             else:
-                dic[char] = 1
+                characters[content[i]] = 1
 
-    return dic
+    new_dic = {}
+    for char in characters:
+        if char.is_alpha():
+            new_dic[char] = characters[char]
+
+    return new_dic
