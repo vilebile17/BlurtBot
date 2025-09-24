@@ -13,7 +13,7 @@ async def bookbot(interaction, n):
 
     new_dic = {}
     for char in characters:
-        if char.is_alpha():
+        if char.isalpha():
             new_dic[char] = characters[char]
 
     return new_dic

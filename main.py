@@ -18,7 +18,6 @@ load_dotenv()
 discord_key = os.environ.get("DISCORD_TOKEN")
 default_channel_ID = int(os.environ.get("DEFAULT_CHANNEL"))
 
-
 @bot.event
 async def on_disconnect():
     print("BlurtBot out 🫡")
@@ -27,6 +26,8 @@ async def on_disconnect():
 async def on_message(message):
     if message.author == bot.user:
         return
+
+    await bot.process_commands(message) # Just incase I add invisible prefix commands
 
     if bot.user.mention in message.content:
         await message.channel.send(mention(message.content))
@@ -72,18 +73,21 @@ async def _bookbot(interaction: discord.Interaction, n: int = 10000):
 
 # 8-BALL
 @bot.tree.command(name="8ball", description="Gives a magic-8-ball like response")
-async def _8ball(interaction: discord.Interaction):
-    options = ["yes", "no", "perhaps"]
-    enum = random.choice(options)
-    await interaction.response.send_message(magic_8_ball(enum))
+async def _8ball(interaction: discord.Interaction, inquiry: str):
+    await interaction.response.send_message(
+        f"_{inquiry}_... \n\n{magic_8_ball(inquiry)}"
+    )
 
 # Bot set up and syncing basically
 @bot.event
 async def on_ready():
     # sync up the commands
-    guild = discord.Object(id=os.environ.get("SERVER_ID"))
-    bot.tree.clear_commands(guild=guild)
-    await bot.tree.sync(guild=guild)
+    try:
+        synced = await bot.tree.sync()
+        print(f"Synced {len(synced)} command(s)")
+    except Exception as e:
+        print("Sync failed: ", e)
+
     channel = bot.get_channel(default_channel_ID)
     if channel is not None:
         await channel.send("BlurtBot is up and ready for use!")
