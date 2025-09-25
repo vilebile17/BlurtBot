@@ -3,10 +3,9 @@ from dotenv import load_dotenv
 from discord.ext import commands
 from discord import app_commands
 
-from gemini import predict_message, mention, magic_8_ball
+from gemini import predict_message, mention, magic_8_ball, user_join, user_leave
 from message_counter import message_counter, format_results
 from bookbot import bookbot
-
 
 
 intents = discord.Intents.default()
@@ -39,6 +38,15 @@ async def on_command_error(ctx, error):
     else:
         print(error)
 
+@bot.event 
+async def on_member_join(member):
+    default_channel = bot.get_channel(int(os.environ.get("DEFAULT_CHANNEL")))
+    await default_channel.send(user_join(member.display_name))
+
+@bot.event 
+async def on_member_remove(member):
+    default_channel = bot.get_channel(int(os.environ.get("DEFAULT_CHANNEL")))
+    await default_channel.send(user_leave(member.display_name))
 
 # PREDICT
 @bot.tree.command(name="predict", description="Predicts a message using Google Gemini based on the last 20 messages")
@@ -116,10 +124,9 @@ async def on_ready():
         print(f"new command: {cmd.name}")
     print()
 
-    default_channel_ID = int(os.environ.get("DEFAULT_CHANNEL"))
-    channel = bot.get_channel(default_channel_ID)
-    if channel is not None:
-        await channel.send("BlurtBot is up and ready for use!")
+    default_channel = bot.get_channel(int(os.environ.get("DEFAULT_CHANNEL")))
+    if default_channel is not None:
+        await default_channel.send("BlurtBot is up and ready for use!")
     else:
         print("Channel not found :(")
 

@@ -60,3 +60,11 @@ def mention(message):
 def magic_8_ball(inquiry):
     instructions = f"You are a magic eight ball. You must give a short response just like a magic eight ball would"
     return get_response(instructions, inquiry)
+
+def user_join(username):
+    instructions = "Somebody just joined a discord server, please give them a concise welcome message. You will recieve the member's username"
+    return get_response(instructions, username)
+
+def user_leave(username):
+    instructions = "Somebody just left a discord server, please give them a concise farewell message. You will recieve the member's username"
+    return get_response(instructions, username)
