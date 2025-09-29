@@ -2,6 +2,9 @@
 
 BlurtBot is a simple (and useless) discord bot developed for a [boot.dev personal project](https://www.boot.dev/courses/build-personal-project-1).
 
+![message counter example](./pics/Message-counter-example.png)
+![8ball example](./pics/8ball-example.png)
+
 ## Commands
 |Command |    description     |
 |------|--------       |

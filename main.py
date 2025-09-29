@@ -68,16 +68,18 @@ async def predict(interaction: discord.Interaction):
 # MESSAGE COUNTER
 @bot.tree.command(name="message-counter", description="Counts the number of messages sent by each user in the last n messages")
 async def _message_counter(interaction: discord.Interaction, num_messages: int = 10000):
+    await interaction.response.defer()
     dic = await message_counter(interaction, num_messages)
     results = format_results(dic, "# Message Count")
-    await interaction.response.send_message(results)
+    await interaction.followup.send(results)
 
 # BOOK BOT
 @bot.tree.command(name="bookbot", description="Counts the number of times each character shows up in the channel")
 async def _bookbot(interaction: discord.Interaction, num_messages: int = 10000):
+    await interaction.response.defer()
     dic = await bookbot(interaction, num_messages)
     results = format_results(dic, "# Character Composition")
-    await interaction.response.send_message(results)
+    await interaction.followup.send(results)
 
 # 8-BALL
 @bot.tree.command(name="8ball", description="Gives a magic-8-ball like response")
