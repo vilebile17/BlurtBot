@@ -12,6 +12,7 @@ BlurtBot is a simple (and useless) discord bot developed for a [boot.dev persona
 |8ball|Pretty straight forward, gives a magic-eight-ball like response|
 |BookBot|Counts the frequency that each character appears at in each channel (eg. how many 't's or 'e's or '💀's)|
 |Random-Person|Selects a random person who has access to the channel|
+|@BlurtBot|If you @ mention the bot it will use google gemini to offer a response! (You basically have access to Gemini directly in a channel)|
 
 ![message counter example](./pics/Message-counter-example.png)
 
