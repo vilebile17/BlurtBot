@@ -2,7 +2,6 @@
 
 BlurtBot is a simple (and useless) discord bot developed for a [boot.dev personal project](https://www.boot.dev/courses/build-personal-project-1).
 
-![message counter example](./pics/Message-counter-example.png)
 ![8ball example](./pics/8ball-example.png)
 
 ## Commands
@@ -13,6 +12,8 @@ BlurtBot is a simple (and useless) discord bot developed for a [boot.dev persona
 |8ball|Pretty straight forward, gives a magic-eight-ball like response|
 |BookBot|Counts the frequency that each character appears at in each channel (eg. how many 't's or 'e's or '💀's)|
 |Random-Person|Selects a random person who has access to the channel|
+
+![message counter example](./pics/Message-counter-example.png)
 
 As of right now, there are no prefix commands. (The ones that are invisible and used by power-users) *However*, I may add some in the future.
 
