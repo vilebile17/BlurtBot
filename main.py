@@ -64,7 +64,6 @@ async def predict(interaction: discord.Interaction):
         await interaction.response.send_message(prediction)
     else:
         print("Either message history is empty or the permission to view history is off")
-print("defined predict")
 
 # MESSAGE COUNTER
 @bot.tree.command(name="message-counter", description="Counts the number of messages sent by each user in the last n messages")
@@ -72,7 +71,6 @@ async def _message_counter(interaction: discord.Interaction, num_messages: int =
     dic = await message_counter(interaction, num_messages)
     results = format_results(dic, "# Message Count")
     await interaction.response.send_message(results)
-print("defined message-counter")
 
 # BOOK BOT
 @bot.tree.command(name="bookbot", description="Counts the number of times each character shows up in the channel")
@@ -80,7 +78,6 @@ async def _bookbot(interaction: discord.Interaction, num_messages: int = 10000):
     dic = await bookbot(interaction, num_messages)
     results = format_results(dic, "# Character Composition")
     await interaction.response.send_message(results)
-print("defined bookbot")
 
 # 8-BALL
 @bot.tree.command(name="8ball", description="Gives a magic-8-ball like response")
@@ -88,7 +85,6 @@ async def _8ball(interaction: discord.Interaction, inquiry: str):
     await interaction.response.send_message(
         f"_{inquiry}_... \n\n{magic_8_ball(inquiry)}"
     )
-print("defined 8-ball")
 
 # RANDOM PERSON
 @bot.tree.command(name="random-person", description="Picks a random person who has access to this channel")
@@ -98,7 +94,6 @@ async def _random_dude(interaction: discord.Interaction):
     print(member_list, "\n")
     chosen_one = random.choice(member_list)
     await interaction.response.send_message(chosen_one)
-print("defined random-person")
 
 # Bot set up and syncing
 @bot.event
@@ -109,22 +104,15 @@ async def on_ready():
         print("Err guys, the guild ain't guilding")
         sys.exit(1089)
 
-    for cmd in bot.tree.get_commands():
-        print(f"old commmand: {cmd.name}")
-    print()
-
     # sync up the commands
     try:
         synced = await bot.tree.sync(guild=guild)
-        print(f"Synced {len(synced)} command(s)")
+        print("[1/2] syncing commands")
     except Exception as e:
         print("Sync failed: ", e)
 
-    for cmd in bot.tree.get_commands():
-        print(f"new command: {cmd.name}")
-    print()
-
     default_channel = bot.get_channel(int(os.environ.get("DEFAULT_CHANNEL")))
+    print("[2/2] finding default channel")
     if default_channel is not None:
         await default_channel.send("BlurtBot is up and ready for use!")
     else:
