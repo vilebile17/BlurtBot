@@ -1,14 +1,12 @@
-import discord
-
-async def message_counter(interaction, n):
+def message_counter(lst):
     # Takes a list of discord messages and returns a dictionary containing each sender mapped to the number of messages that they sent
-    message_counts =  {}
-    async for message in interaction.channel.history(limit=n):
-        if message.author in message_counts:
-            message_counts[message.author] += 1
+    dic = {}
+    for message in lst:
+        if message.author in dic:
+            dic[message.author] += 1
         else:
-            message_counts[message.author] = 1
-    return message_counts
+            dic[message.author] = 1
+    return dic
 
 
 def dic_sum(dic):
@@ -28,7 +26,7 @@ def format_results(dic, header):
 
     for sender in sorted_dic:
         counter += 1
-        percentage = round((dic[sender] / total_message_count) * 100, 2) 
-        string += f"\n{counter}. {sender}: **{dic[sender]}** ({percentage}%)"  
+        percentage = round((dic[sender] / total_message_count) * 100, 2)
+        string += f"\n{counter}. {sender}: **{dic[sender]}** ({percentage}%)"
         # example format: 1. User123: **87** (24.30%)
-    return string 
+    return string

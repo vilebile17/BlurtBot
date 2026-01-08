@@ -1,8 +1,5 @@
-import discord
-
-async def bookbot(interaction, n):
+def bookbot(messages):
     characters = {}
-    messages = [word async for word in interaction.channel.history(limit=n)]
     for message in messages:
         content = message.content.lower()
         for i in range(len(content)):
