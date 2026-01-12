@@ -1,4 +1,4 @@
-import os, sys, random, discord
+import os, random, discord
 from dotenv import load_dotenv
 from discord.ext import commands
 from discord import app_commands
@@ -136,7 +136,11 @@ async def _random_dude(interaction: discord.Interaction):
     member_list.remove("BlurtBot")
     print(member_list, "\n")
     chosen_one = random.choice(member_list)
-    await interaction.response.send_message(chosen_one)
+    num = random.randint(1, 6)
+    await interaction.response.send_message(
+        chosen_one + (" :sponge:" if num == 6 else "")
+    )
+    print(f"Ran randomDude with a num of {num}")
 
 
 # Bot set up and syncing

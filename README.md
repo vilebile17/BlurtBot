@@ -6,6 +6,8 @@ BlurtBot is a simple (and useless) discord bot developed for a [boot.dev persona
 
 ## Commands
 
+**NOTE that as of right now, the google gemini commands do not work (I've temporarily removed them) as google has severely reduced the number of free tokens you can have**
+
 |Command |    description     |
 |------|--------       |
 |Predict|Uses [google gemini](https://ai.google.dev/) to predict the next message based on the last 20 (it's not very good)|

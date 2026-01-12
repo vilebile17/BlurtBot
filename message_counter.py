@@ -1,4 +1,4 @@
-def message_counter(lst):
+def message_counter(lst) -> dict:
     # Takes a list of discord messages and returns a dictionary containing each sender mapped to the number of messages that they sent
     dic = {}
     for message in lst:
@@ -9,7 +9,7 @@ def message_counter(lst):
     return dic
 
 
-def dic_sum(dic):
+def dic_sum(dic) -> int:
     # Used for the next function
     total = 0
     for item in dic:
@@ -17,7 +17,7 @@ def dic_sum(dic):
     return total
 
 
-def format_results(dic, header):
+def format_results(dic, header) -> str:
     # formats the results from message_counter() nicely
     sorted_dic = dict(sorted(dic.items(), key=lambda item: item[1], reverse=True))
     string = header

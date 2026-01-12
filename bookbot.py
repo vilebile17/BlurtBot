@@ -1,16 +1,15 @@
-def bookbot(messages):
+def bookbot(messages) -> dict:
     characters = {}
     for message in messages:
         content = message.content.lower()
-        for i in range(len(content)):
-            if content[i] in characters:
-                characters[content[i]] += 1
-            else:
-                characters[content[i]] = 1
+        add_message_to_dic(characters, content)
+    return characters
 
-    new_dic = {}
-    for char in characters:
-        if char.isalpha():
-            new_dic[char] = characters[char]
 
-    return new_dic
+def add_message_to_dic(dic, message):
+    not_wanted_chars = " .:'\";?!-*\n()[]{}%&@><|^+-=`/“”#"
+    for char in message:
+        if char in dic:
+            dic[char] += 1
+        elif char not in not_wanted_chars:
+            dic[char] = 1
