@@ -8,42 +8,12 @@ BlurtBot is a simple (and useless) discord bot developed for a [boot.dev persona
 
 For installing the bot you have two options:
 
-1. The bot is being hosted on [AWS elastic beanstalk](https://eu-north-1.console.aws.amazon.com/elasticbeanstalk/) (I'm not sure how clever that is...) so you can add it to your server via this [link](https://discord.com/oauth2/authorize?client_id=1415294993320378469&permissions=137439439872&integration_type=0&scope=bot+applications.commands) and it should work perfectly fine out-of-the-box.
-2. Self-hosting (where you do loads of work!)
-
-```
-git clone https://github.com/vilebile17/BlurtBot
-cd BlurtBot
-```
-
-You then need to create a .env file in the following format:
-
-```
-DISCORD_TOKEN="..."
-GEMINI_API_KEY="..."
-SERVER_ID="..."
-DEFAULT_CHANNEL="..."
-```
-
-- The **DISCORD_TOKEN** can be found by navigating to the [discord apps](https://discord.com/developers/applications) page and then creating a new one. Click on it and navigate to the 'Bot' tab. You should see a button that says 'reset token.' That button give you your token as discord will always hide the token for security reasons.
-- The **GEMINI_API_KEY** can be found at google's [dev page.](https://aistudio.google.com) Click the 'Create API Key' button and you should have it.
-- **SERVER_ID** can be found in discord by right-clicking on the server and clicking 'copy server id' (make sure you have turned developer mode on in settings->advanced settings->developer mode)
-- **DEFAULT_CHANNEL** is very similar to SERVER_ID, right-click on a channel to get its ID
-
-Once you have completed all of that you should be good to go!
-
-
-```
-uv run main.py
-```
-
-**uv should auto-magically install all of the dependencies through the pyproject.toml**
-
---- 
+1. Click this [link](https://discord.com/oauth2/authorize?client_id=1415294993320378469&permissions=137439439872&integration_type=0&scope=bot+applications.commands) to add it to your server. I may or may not be hosting the bot right now so there's a good chance that it will be offline ☹️
+2. **DOCKER!** - head over to my [docker repo](https://hub.docker.com/repository/docker/vilebile17/blurt_bot/general) and follow the instructions there. It is _so_ much cooler than cloning and running via `uv`.
 
 ## Commands
 
-**NOTE that as of right now, the google gemini commands do not work (I've temporarily removed them) as google has severely reduced the number of free tokens you can have**
+**NOTE that as of right now, the google gemini commands do not work (I've temporarily removed them) as google has severely reduced the number of free tokens you can have. I might (probably won't as we developers _love_ making fake promises) add a different LLM at some point in the future.**
 
 |Command |    description     |
 |------|--------       |
@@ -56,5 +26,5 @@ uv run main.py
 
 ![message counter example](./pics/Message-counter-example.png)
 
-As of right now, there are no prefix commands. (The ones that are invisible and used by power-users) *However*, I may add some in the future.
+As of right now, there are no prefix commands. (The ones that don't show up in the discord commands section and are _invisible_) *However*, I may (probably won't) add some in the future.
 
