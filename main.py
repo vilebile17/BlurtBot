@@ -90,8 +90,10 @@ async def on_member_remove(member):
     description="Counts the number of messages sent by each user in the last n messages",
 )
 async def _message_counter(interaction: discord.Interaction, limit: int):
-    print(f"Message counter called with a limit of {limit}")
+    print("interaction received")
     await interaction.response.defer()
+    print("deferred")
+    print(f"Message counter called with a limit of {limit}")
     messages = [word async for word in interaction.channel.history(limit=limit)]
     dic = message_counter(messages)
     results = format_results(dic, "# Message Count")
@@ -104,8 +106,8 @@ async def _message_counter(interaction: discord.Interaction, limit: int):
     description="Counts the number of times each character shows up in the channel",
 )
 async def _bookbot(interaction: discord.Interaction, limit: int):
-    print(f"Book Bot called with a limit of {limit}")
     await interaction.response.defer()
+    print(f"Book Bot called with a limit of {limit}")
     messages = [word async for word in interaction.channel.history(limit=limit)]
     dic = bookbot(messages)
     results = format_results(dic, "# Character Composition")
@@ -126,7 +128,7 @@ async def _8ball(interaction: discord.Interaction):
         "Cool your embers, empty your mind from the shackles and turn again to the ball for assistance.",
         "I think you've gone a bit crazy...",
         "https://klipy.com/gifs/just-do-it-shia-la-beouf-1",
-        "¯\_(ツ)_/¯",
+        ":man_shrugging:",
     ]
     await interaction.response.send_message(random.choice(options))
 
