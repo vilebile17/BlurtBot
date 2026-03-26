@@ -1,11 +1,13 @@
-import os, random, discord
-from dotenv import load_dotenv
-from discord.ext import commands
+import os
+import random
+
+import discord
 from discord import app_commands
+from discord.ext import commands
+from dotenv import load_dotenv
 
-from message_counter import message_counter, format_results
 from bookbot import bookbot
-
+from message_counter import format_results, message_counter
 
 intents = discord.Intents.default()
 intents.message_content = True
@@ -13,7 +15,7 @@ intents.messages = True
 intents.members = True
 bot = commands.Bot(command_prefix="!", intents=intents)
 
-load_dotenv()
+load_dotenv(".env")
 discord_key = os.environ.get("DISCORD_TOKEN")
 
 
@@ -114,7 +116,7 @@ async def _bookbot(interaction: discord.Interaction, limit: int):
 @bot.tree.command(name="8ball", description="Gives a magic-8-ball like response")
 async def _8ball(interaction: discord.Interaction):
     options = [
-        "The starts have aligned in your favour...",
+        "The stars have aligned in your favour...",
         "It may be wise to avoid...",
         "You lack conviction; speak from the heart.",
         "Indeed, my brother, it is necessary.",
@@ -122,6 +124,9 @@ async def _8ball(interaction: discord.Interaction):
         "Thou shall findeth in thy afair great difficulty...",
         "Go forth; I find no reason to back away.",
         "Cool your embers, empty your mind from the shackles and turn again to the ball for assistance.",
+        "I think you've gone a bit crazy...",
+        "https://klipy.com/gifs/just-do-it-shia-la-beouf-1",
+        "¯\_(ツ)_/¯",
     ]
     await interaction.response.send_message(random.choice(options))
 
@@ -132,13 +137,13 @@ async def _8ball(interaction: discord.Interaction):
     description="Picks a random person who has access to this channel",
 )
 async def _random_dude(interaction: discord.Interaction):
-    member_list = [member.display_name for member in interaction.channel.members]
-    member_list.remove("BlurtBot")
-    print(member_list, "\n")
+    member_list = [member for member in interaction.channel.members]
+    member_list.remove(bot.user)
+    print([member.display_name for member in member_list], "\n")
     chosen_one = random.choice(member_list)
     num = random.randint(1, 6)
     await interaction.response.send_message(
-        chosen_one + (" :sponge:" if num == 6 else "")
+        chosen_one.mention + (" :sponge:" if num == 6 else "")
     )
     print(f"Ran randomDude with a num of {num}")
 
