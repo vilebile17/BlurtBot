@@ -1,5 +1,6 @@
 import os
 import random
+import sys
 
 import discord
 from discord import app_commands
@@ -19,6 +20,23 @@ load_dotenv(".env")
 discord_key = os.environ.get("DISCORD_TOKEN")
 
 
+def get_random_emoji(lst: list[int]) -> str:
+    num = random.choice(lst)
+    if num == 0:
+        return ":sponge:"
+    elif num == 1:
+        return "<a:bigbrain:1420492173111201822>"
+    elif num == 2:
+        return "<a:amongus:1420490397137768561>"
+    elif num == 3:
+        return "<:trollface:1420489873562927205>"
+    elif num == 4:
+        return "<:gigachad:1417832993883557980>"
+    elif num == 5:
+        return "<:Blurt:1417547920722366686>"
+    return ""
+
+
 @bot.event
 async def on_disconnect():
     print("BlurtBot out 🫡")
@@ -31,8 +49,12 @@ async def on_message(message):
 
     await bot.process_commands(message)  # Just incase I add invisible prefix commands
 
-    # if bot.user.mention in message.content:
-    # await message.channel.send(mention(message.content))
+    if bot.user.mention in message.content and (
+        "hello" in message.content.lower() or "hi" in message.content.lower()
+    ):
+        await message.channel.send(
+            f"Hello there {message.author}! {get_random_emoji([0, 2, 4, 5])}"
+        )
 
 
 @bot.event
@@ -166,4 +188,19 @@ async def on_ready():
         print("Channel not found :(")
 
 
-bot.run(discord_key)
+try:
+    bot.run(discord_key)
+except Exception as e:
+    print(e, flush=True)
+    print()
+
+    if isinstance(e, TypeError):
+        print("Likely missing .env file", flush=True)
+        print("Docker: docker run --env-file .env vilebile17/blurt_bot", flush=True)
+        print("If you haven't made the .env file yet, check out the docs", flush=True)
+        print(
+            "Docs: https://hub.docker.com/repository/docker/vilebile17/blurt_bot/general",
+            flush=True,
+        )
+
+    sys.exit(1)
